@@ -1,0 +1,15 @@
+{
+  "name": "Scala Dev Container with Metals and Spark",
+  "image": "sbtscala/scala-sbt:eclipse-temurin-17.0.15_6_1.11.3_2.13.16",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "scala-lang.scala",
+    "scalameta.metals",
+    "ms-vscode.sbt"
+  ],
+  "mounts": [
+  ],
+  "postCreateCommand": "sbt update"
+}
