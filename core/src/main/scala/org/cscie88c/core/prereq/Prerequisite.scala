@@ -7,13 +7,13 @@ object Prerequisite {
 
   // read lines from file and convert each row to CustomerTransaction record
   def fromCSV(csvFile: String): List[CustomerTransaction] = {
-    Using.resource(Source.fromFile(csvFile)) { source =>
+    Using(Source.fromFile(csvFile)) { source =>
       source
       .getLines()
       .drop(1) // drop header
       .map(CustomerTransaction.apply)
       .toList
-    }
+    }.getOrElse(List.empty)
   }
 
   // a function for returning a list retail transactions with amounts greater than $100
