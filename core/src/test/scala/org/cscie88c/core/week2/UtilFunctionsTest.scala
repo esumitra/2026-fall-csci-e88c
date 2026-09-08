@@ -9,6 +9,7 @@ class UtilFunctionsTest extends StandardTest {
       "return true for a palindrome word" in {
         UtilFunctions.isPalindrome("tenet") should be (true)
       }
+      // add more tests for isPalindrome
     }
 
     // add unit tests for median below
