@@ -119,3 +119,6 @@ zipHomework := {
     None
   )
 }
+
+// docker settings for packaging the application as a Docker container
+ThisBuild / dockerBaseImage := "eclipse-temurin:17-jdk"
