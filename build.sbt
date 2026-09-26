@@ -122,3 +122,6 @@ zipHomework := {
 
 // docker settings for packaging the application as a Docker container
 ThisBuild / dockerBaseImage := "eclipse-temurin:17-jdk"
+//When running the tests, disabling parallel execution & buffering the output makes debugging easier
+Test / parallelExecution := false
+Test / logBuffered := true
