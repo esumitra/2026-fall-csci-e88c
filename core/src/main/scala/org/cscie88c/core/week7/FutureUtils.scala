@@ -14,7 +14,7 @@ object FutureUtils {
 
   def printCreditScore(applicantId: Int): Unit = ???
 
-  def passedCreditCheck(applicantId: Int): Future[Boolean] = ???
+  def passedCreditCheck(applicantId: Int): Future[(Int, Boolean)] = ???
 
   def futureFactorial(n: Int): Future[Int] = ???
 
