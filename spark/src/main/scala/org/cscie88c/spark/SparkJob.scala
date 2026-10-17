@@ -7,7 +7,6 @@ object SparkJob {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder()
       .appName("SampleSparkJob")
-      .master("local[*]")
       .getOrCreate()
 
     import spark.implicits._

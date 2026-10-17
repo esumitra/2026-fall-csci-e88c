@@ -91,7 +91,7 @@ This project can be run in a DevContainer for a consistent development environme
    ```bash
    docker exec -it spark-master /bin/bash
    
-   /opt/spark/bin/spark-submit --class spark.SparkJob --master spark://spark-master:7077 /opt/spark-apps/SparkJob.jar
+   /opt/spark/bin/spark-submit --class org.cscie88c.spark.SparkJob --master spark://spark-master:7077 /opt/spark-apps/SparkJob.jar
    ```
 ## Docker commands
 
