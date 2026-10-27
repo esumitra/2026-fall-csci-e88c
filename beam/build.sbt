@@ -13,14 +13,21 @@ libraryDependencies ++= Seq(
 )
 dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-databind" % "2.14.2"
 
-Compile / mainClass := Some("beam.BeamJob")
+Compile / mainClass := Some("org.cscie88c.beam.BeamJob")
 
-assembly / mainClass := Some("beam.BeamJob")
+assembly / mainClass := Some("org.cscie88c.beam.BeamJob")
 assembly / assemblyJarName := "BeamJob.jar"
 assembly / test := {}
 assembly / assemblyMergeStrategy := {
+  // Beam discovers coders/runners/filesystems via ServiceLoader, so merge service files
+  case PathList("META-INF", "services", _*) => MergeStrategy.concat
   case PathList("META-INF", xs @ _*) => MergeStrategy.discard
   case "application.conf"            => MergeStrategy.concat
+  // the Beam runner jars are shaded and re-bundle the same classes/protos as beam-sdks-java-core
+  case PathList("org", "apache", "beam", _*) => MergeStrategy.first
+  case x if x.endsWith(".class") || x.endsWith(".proto") || x.endsWith(".txt") => MergeStrategy.first
+  case "arrow-git.properties"        => MergeStrategy.discard
+  case PathList(("commonMain" | "mozilla" | "google"), _*) => MergeStrategy.first
   case x =>
     val oldStrategy = (assembly / assemblyMergeStrategy).value
     oldStrategy(x)
