@@ -6,12 +6,14 @@ libraryDependencies ++= Seq(
     // kafka streams
     "org.apache.kafka" %% "kafka-streams-scala" % kafkaClientVersion,
     "com.goyeau" %% "kafka-streams-circe" % "0.6.3",
+  //msk authentication
+  "software.amazon.msk" % "aws-msk-iam-auth" % "2.2.0"
 )
 dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-databind" % "2.14.2"
 
-Compile / mainClass := Some("org.cscie88c.kafka.StreamingApp")
+Compile / mainClass := Some("org.cscie88c.kafka.TransactionApp")
 
-assembly / mainClass := Some("org.cscie88c.kafka.StreamingApp")
+assembly / mainClass := Some("org.cscie88c.kafka.TransactionApp")
 assembly / assemblyJarName := "StreamingApp.jar"
 assembly / test := {}
 assembly / assemblyMergeStrategy := {
