@@ -1,12 +1,12 @@
 # kafka docker with single partitions
 # 1 zookeper, 1 brokers
-version: '3'
+name: harvard-demo-kafka
 
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.0
     hostname: zookeeper
-    container_name: kafkastreams-zookeeper-container
+    container_name: kafka-zookeeper
     ports:
       - "2181:2181"
     environment:
@@ -16,7 +16,7 @@ services:
   broker1:
     image: confluentinc/cp-kafka:6.2.0
     hostname: broker
-    container_name: kafkastreams-broker1-container
+    container_name: kafka-broker1
     depends_on:
       - zookeeper
     ports:
@@ -34,19 +34,23 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
     volumes:
+      #The volume for kafka data is not mounted, so topics will be created each time
+      #Uncomment this to keep the topic data
+      # - ./docker/volumes/kafka-topics:/var/lib/kafka/data/
        - ./data:/opt/kafka-data
 
   # This "container" is a workaround to pre-create topics
   kafka-setup:
     image: confluentinc/cp-kafka:6.2.0
     hostname: kafka-setup
-    container_name: kafkastreams-kafka-setup
+    container_name: kafka-setup
     depends_on:
       - broker1
     command: "/bin/bash -c 'echo Waiting for Kafka to be ready... && \
                             sleep 30 && \
                             kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 1 --replication-factor 1 --topic input_word && \
                             kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 1 --replication-factor 1 --topic output_word && \
+                            kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 1 --replication-factor 1 --topic output_timestamp && \
                             kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 1 --replication-factor 1 --topic input_txn && \
                             kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 1 --replication-factor 1 --topic input_cust && \
                             kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 1 --replication-factor 1 --topic output_txn'"
