@@ -25,7 +25,11 @@ object ProducerExample extends App with LazyLogging{
 
     val producer = new KafkaProducer[String, String](props)
 
-    val record = new ProducerRecord[String, String](outputTopic, "key", "Hello Kafka from Scala at "+new Date())
-    producer.send(record)
+    val max = 5;
+    (1 to max).foreach(i => {
+      val record = new ProducerRecord[String, String](outputTopic, "key", s"Hello Kafka ${i} from Scala at " + new Date())
+      producer.send(record)
+      logger.info(s"Finished publishing record ${i} of ${max}")
+    })
     producer.close()
 }

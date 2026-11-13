@@ -13,6 +13,20 @@ import java.util.Properties
 import scala.util.Try
 
 
+/**
+ * This is a more complex example that reads from 2 topics
+ * One is a KStream of transactions, the other is a KTable of customers
+ * The data is transformed, joined and published to another topic with a new key
+ *
+ * After installing kcat:
+ * You can publish customer data
+ * kcat -P -b localhost:9092 -t input_cust -K, < data/kafka_customers.csv
+ *
+ * You can publish transactions without the separator :
+ *  kcat -P -b localhost:9092 -t input_txn < data/kafka_transactions.csv
+ *
+ * To run in AWS, make sure you specify -Dmode.aws before the -jar param
+ */
 object TransactionApp extends LazyLogging {
 
 
