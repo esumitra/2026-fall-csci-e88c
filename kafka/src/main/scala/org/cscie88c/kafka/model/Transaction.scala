@@ -1,4 +1,4 @@
-package org.cscie88c.kafka
+package org.cscie88c.kafka.model
 
 final case class Transaction(
   number: String,
